@@ -26,25 +26,25 @@ class FileStats:
 
 
 with open(args.code_file) as f:
-  	code_filenames = json.load(f)
+  code_filenames = json.load(f)
 
 
 # What each of the items mean: https://github.com/linux-test-project/lcov/issues/113
 def get_file_stats(file_reader, filename):
-  	record_stats = new FileStats(filename)
-  	while True:
-    	curr_line = f.readline().rstrip()
-    	if curr_line.startswith("end_of_record"):
-      		return record_stats
-    	if curr_line.startswith("BRF:"):
-    		record_stats.add_value('BRF', int(curr_line[4:]))
-    	if curr_line.startswith("BRH:"):
-      		record_stats.add_value('BRH', int(curr_line[4:]))
-    	if curr_line.startswith("LH:"):
-      		record_stats.add_value('LH', int(curr_line[3:]))
-    	if curr_line.startswith("LF:"):
-      		record_stats.add_value('LF', int(curr_line[3:]))
-     return record_stats
+  record_stats = FileStats(filename)
+  while True:
+    curr_line = f.readline().rstrip()
+    if curr_line.startswith("end_of_record"):
+    	return record_stats
+    if curr_line.startswith("BRF:"):
+    	record_stats.add_value('BRF', int(curr_line[4:]))
+    if curr_line.startswith("BRH:"):
+      record_stats.add_value('BRH', int(curr_line[4:]))
+    if curr_line.startswith("LH:"):
+      record_stats.add_value('LH', int(curr_line[3:]))
+    if curr_line.startswith("LF:"):
+      record_stats.add_value('LF', int(curr_line[3:]))
+    return record_stats
 
 
 stats_by_filename = {}
@@ -116,7 +116,7 @@ with open(args.output_file, 'w', newline='') as csvfile:
           fieldnames[3]: 1.0 * total_lines_hit / total_lines_found, 
           fieldnames[4]: total_branches_found, 
           fieldnames[5]: total_branches_hit, 
-          fieldnames[6]: 1.0 * total_branches_hit / total_branches_found,
+          fieldnames[6]: 0 if total_branches_found == 0 else 1.0 * total_branches_hit / total_branches_found,
           })
 
 
