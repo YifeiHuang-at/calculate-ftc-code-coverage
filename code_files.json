@@ -1,0 +1,20 @@
+[
+  "worker_service/crud_managers/app_snapshot_json_fixup_migrations/fixup_migrations/rename_authoritative_source_sync_id_by_column_id_if_exists.tsx",
+  "worker_service/crud_managers/crud_table_action_handlers/private_api/table_sync_with_external_data_diff_utils.tsx",
+  "worker_service/crud_managers/crud_table_action_handlers/private_api/table_update_authoritative_external_sources_for_columns.tsx",
+  "worker_service/crud_managers/crud_table_action_handlers/private_api/table_fix_sync_target_table_configuration.tsx",
+  "worker_service/crud_managers/crud_table_action_handlers/private_api/table_update_external_sync_source_config.tsx",
+  "worker_service/internal/external_table_sync/enqueue_external_table_sync/create_schema_diff.tsx",
+  "worker_service/internal/external_table_sync/fix_sync_target_table_configuration_helpers.tsx",
+  "worker_service/internal/external_table_sync/sync_with_external_data/get_cell_value_update.tsx", 
+  "worker_service/internal/external_table_sync/external_table_config_managers/external_table_sync_config_validator.tsx",
+  "worker_service/internal/external_table_sync/external_table_config_managers/external_table_sync_config_manager.tsx",
+  "worker_service/internal/external_table_sync/external_table_config_managers/external_table_sync_info_by_id_manager.tsx",
+  "worker_service/internal/external_table_sync/external_table_config_managers/external_table_sync_info_manager.tsx",
+  "worker_service/internal/external_table_sync/sync_with_external_data/sync_with_external_data_update_columns.tsx",
+  "worker_service/internal/external_table_sync/sync_with_external_data/foreign_key_target_column_handler.tsx",
+  "worker_service/internal/external_table_sync/external_table_sync_column_utils.tsx",
+  "worker_service/internal/external_table_sync/external_table_sync_config_utils.tsx", 
+  "worker_service/internal/external_table_sync/sync_with_external_data/sync_update_error_handler.tsx",
+  "worker_service/crud_managers/crud_table_action_handlers/private_api/table_sync_delete_unmapped_target_customized_column_utils.tsx"
+]
