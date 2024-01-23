@@ -3,6 +3,7 @@ import json
 import argparse
 import csv
 import os
+import re
 
 parser = argparse.ArgumentParser()
 
@@ -14,15 +15,20 @@ args = parser.parse_args()
 print(args.lcov_file, args.code_file, args.output_file)
 
 class FileStats:
-	def __init__(self, name):
-		self.name = name
-		self.stats = {}
+  def __init__(self, name):
+    self.name = name
+    self.stats = {}
 
-	def add_value(self, name, value):
-		self.stats[name] = value
 
-	def get_value(self, name):
-		return self.stat[name] or 0
+  def add_value(self, name, value):
+    self.stats[name] = value
+
+  def get_value(self, name):
+    if name in self.stats.keys():
+      return self.stats[name]
+    else:
+      return 0
+		
 
 
 with open(args.code_file) as f:
@@ -35,7 +41,8 @@ def get_file_stats(file_reader, filename):
   while True:
     curr_line = f.readline().rstrip()
     if curr_line.startswith("end_of_record"):
-    	return record_stats
+      print(record_stats)
+      return record_stats
     if curr_line.startswith("BRF:"):
     	record_stats.add_value('BRF', int(curr_line[4:]))
     if curr_line.startswith("BRH:"):
@@ -44,20 +51,27 @@ def get_file_stats(file_reader, filename):
       record_stats.add_value('LH', int(curr_line[3:]))
     if curr_line.startswith("LF:"):
       record_stats.add_value('LF', int(curr_line[3:]))
-    return record_stats
 
-
+print("Starting to parse lcov file")
 stats_by_filename = {}
 with open(args.lcov_file) as f:
   line = f.readline().rstrip()
   while line:
     if line.startswith("SF:"):
-      filename = line[3:]
-      if filename in code_filenames:
-        stats = get_file_stats(f)
-        print("Analyzing " + filename)
-        print(stats)
-        stats_by_filename[filename] = stats
+      unprocessed_filename = line[3:].rstrip()
+      re_result = re.search(r"(?<=home/hyperbase-tester/hyperbase/).*", unprocessed_filename)
+      if re_result == None:
+        line = f.readline().rstrip()
+        continue
+      else: 
+        filename = re_result.group(0)
+        if filename in code_filenames:
+          print("found file " + filename) 
+          stats = get_file_stats(f, filename)
+          print("Analyzing " + filename)
+          print(stats)
+          stats_by_filename[filename] = stats
+      
     line = f.readline().rstrip()
 
 def get_linecount_for_file(filepath):
